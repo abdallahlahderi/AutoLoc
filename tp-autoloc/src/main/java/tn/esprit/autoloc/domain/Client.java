@@ -1,15 +1,15 @@
 package tn.esprit.autoloc.domain;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Table(name = "Client")
@@ -34,7 +34,8 @@ public class Client {
     private String numPermis;
 
     private LocalDate dateInscription;
-    @OneToMany(mappedBy = "client")
-    private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "client")
+    @JsonIgnore
+    private List<Reservation> reservations = new ArrayList<>();
 }

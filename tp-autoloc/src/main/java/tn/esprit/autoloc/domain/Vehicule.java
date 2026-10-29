@@ -1,10 +1,14 @@
 package tn.esprit.autoloc.domain;
-import tn.esprit.autoloc.domain.enums.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tn.esprit.autoloc.domain.enums.CategorieVehicule;
+import tn.esprit.autoloc.domain.enums.StatutVehicule;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +20,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vehicule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVehicule;
+
     private String immatriculation;
     private String marque;
     private String modele;
@@ -26,15 +32,16 @@ public class Vehicule {
     private BigDecimal tarifJournalier;
     private StatutVehicule statut;
 
-
     @ManyToOne
     @JoinColumn(name = "agence_id")
     private Agence agence;
 
     @OneToMany(mappedBy = "vehicule")
+    @JsonIgnore
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicule", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Maintenance> maintenances = new ArrayList<>();
 
     @ManyToMany

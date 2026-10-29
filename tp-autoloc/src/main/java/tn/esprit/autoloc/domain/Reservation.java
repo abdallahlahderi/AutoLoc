@@ -1,13 +1,14 @@
 package tn.esprit.autoloc.domain;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
+import tn.esprit.autoloc.domain.enums.StatutReservation;
+
 import java.time.LocalDate;
-import tn.esprit.autoloc.domain.enums.*;
 
 @Entity
 @Table(name = "Reservation")
@@ -27,6 +28,7 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     private StatutReservation statut;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
@@ -36,6 +38,6 @@ public class Reservation {
     private Vehicule vehicule;
 
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Contrat contrat;
-
 }
